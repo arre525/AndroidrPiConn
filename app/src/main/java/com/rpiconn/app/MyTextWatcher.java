@@ -31,6 +31,7 @@ public class MyTextWatcher implements TextWatcher
     public void onTextChanged(CharSequence s, int start,
                               int before, int count) {
 
+        // In UI task
         String ipKey = "com.rpiconn.app.ipkey";
         prefs.edit().putString(ipKey, textfield.getText().toString()).apply();
     }

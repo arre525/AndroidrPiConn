@@ -17,7 +17,7 @@ import android.widget.Toast;
 import java.text.Format;
 
 
-public class MainActivity extends ActionBarActivity  implements AsyncResponse{
+public class MainActivity extends ActionBarActivity{
 
 
     connectTask asyncTask;
@@ -32,39 +32,7 @@ public class MainActivity extends ActionBarActivity  implements AsyncResponse{
 
 
 
-    public void processFinish(boolean ok){ // A delegate in the mainactivity, but this is -still- not the right (UI) thread
-        //Here you will receive the result fired from async class
-        //of onPostExecute(result) method.
-        Context context = getApplicationContext();
 
-        int duration = Toast.LENGTH_SHORT;
-        final CharSequence text;
-
-        if(ok)
-        {
-            text = "Succesfully connected";
-
-            final CheckBox chkWindows = (CheckBox) findViewById(R.id.checkBox);
-            chkWindows.post(new Runnable() {
-                public void run() {
-                    chkWindows.setChecked(true);
-                }
-            });
-        }
-        else
-        {
-            text = "Failed to connect";
-        }
-        runOnUiThread(new Runnable() {
-            public void run()
-            {
-                Context context = getApplicationContext();
-                Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-    }
     //this override the implemented method from asyncTask
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,12 +48,10 @@ public class MainActivity extends ActionBarActivity  implements AsyncResponse{
         thefield.setText(ip);
 
 
-        asyncTask = new connectTask(ip);
+        asyncTask = new connectTask(ip,getApplicationContext(),(CheckBox) findViewById(R.id.checkBox));
 
         thefield.addTextChangedListener(new MyTextWatcher(prefs,thefield));
 
-
-        asyncTask.delegate = this;
         asyncTask.execute();
 
     }

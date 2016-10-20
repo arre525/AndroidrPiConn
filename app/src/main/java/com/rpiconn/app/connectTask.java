@@ -1,6 +1,10 @@
 package com.rpiconn.app;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.CheckBox;
+import android.widget.Toast;
 
 import com.rpiconn.app.TCPClient;
 
@@ -8,33 +12,48 @@ import com.rpiconn.app.TCPClient;
 /**
  * Created by Arnout on 20/10/2016.
  */
-public class connectTask extends AsyncTask<String,String,Integer> {
-    public AsyncResponse delegate = null;
-    boolean ok;
+public class connectTask extends AsyncTask<String,String,Boolean> {
+    public Context myctx;
+    CheckBox ckbox;
+    Boolean ok;
     String ip;
 
-    connectTask(String theip)
+    connectTask(String theip,Context thectx,CheckBox theckbox)
     {
         ip = theip;
+        myctx = thectx;
+        ckbox = theckbox;
     }
 
     @Override
-    protected Integer doInBackground(String... message) {
+    protected Boolean doInBackground(String... message) {
 
         //we create a TCPClient object and
         TCPClient tmp = new TCPClient(ip);
         ok = tmp.run();
-        delegate.processFinish(ok);
 
-        return 1;
+        return ok;
     }
+
 
     @Override
-    protected void onProgressUpdate(String... values) {
-        super.onProgressUpdate(values);
-    }
+    protected void onPostExecute(Boolean result) {
+        // This executes in the UI task
 
-    protected void onPostExecute(Integer... result) {
+        int duration = Toast.LENGTH_SHORT;
+        final CharSequence text;
 
+        if(ok)
+        {
+            text = "Succesfully connected";
+
+            ckbox.setChecked(true);
+        }
+        else
+        {
+            text = "Failed to connect";
+        }
+
+        Toast.makeText(myctx, text, Toast.LENGTH_SHORT).show();
     }
 }
