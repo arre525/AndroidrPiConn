@@ -38,30 +38,30 @@ public class MainActivity extends ActionBarActivity  implements AsyncResponse{
         Context context = getApplicationContext();
 
         int duration = Toast.LENGTH_SHORT;
-        CharSequence text;
+        final CharSequence text;
 
         if(ok)
         {
-            runOnUiThread(new Runnable() {
-                public void run()
-                {
-                    Context context = getApplicationContext();
-                    Toast.makeText(context, "Succesfully connected", Toast.LENGTH_SHORT).show();
+            text = "Succesfully connected";
+
+            final CheckBox chkWindows = (CheckBox) findViewById(R.id.checkBox);
+            chkWindows.post(new Runnable() {
+                public void run() {
+                    chkWindows.setChecked(true);
                 }
             });
-            CheckBox chkWindows = (CheckBox) findViewById(R.id.checkBox);
-            chkWindows.setChecked(true);
         }
         else
         {
-            runOnUiThread(new Runnable() {
-                public void run()
-                {
-                    Context context = getApplicationContext();
-                    Toast.makeText(context, "Failed to connect", Toast.LENGTH_SHORT).show();
-                }
-            });
+            text = "Failed to connect";
         }
+        runOnUiThread(new Runnable() {
+            public void run()
+            {
+                Context context = getApplicationContext();
+                Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
     }

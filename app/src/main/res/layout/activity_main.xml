@@ -25,9 +25,9 @@
         android:checked="false"
         android:clickable="false"
         android:enabled="true"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="47dp" />
+        android:layout_marginTop="91dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -38,4 +38,14 @@
         android:phoneNumber="false"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Arnout Apps Inc."
+        android:id="@+id/textView2"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>
