@@ -8,10 +8,6 @@ import android.widget.Toast;
 
 import com.rpiconn.app.TCPClient;
 
-
-/**
- * Created by Arnout on 20/10/2016.
- */
 public class connectTask extends AsyncTask<String,String,Boolean> {
     public Context myctx;
     CheckBox ckbox;
@@ -38,7 +34,7 @@ public class connectTask extends AsyncTask<String,String,Boolean> {
 
     @Override
     protected void onPostExecute(Boolean result) {
-        // This executes in the UI task
+        // This executes in the UI thread
 
         int duration = Toast.LENGTH_SHORT;
         final CharSequence text;

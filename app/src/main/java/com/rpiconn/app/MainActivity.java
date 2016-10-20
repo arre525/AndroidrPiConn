@@ -23,53 +23,41 @@ public class MainActivity extends ActionBarActivity{
     connectTask asyncTask;
     String ipKey = "com.rpiconn.app.ipkey";
 
-
+    // Make sure if back is pressed, the app closes, so if we restart it, it tries to connect again
     public void onBackPressed()
     {
-
             finish();
     }
 
 
-
-
-    //this override the implemented method from asyncTask
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Read the stored IP address and set it in our textfield
         EditText thefield = (EditText) findViewById(R.id.editText);
         SharedPreferences prefs = this.getSharedPreferences(
                 "com.rpiconn.app", Context.MODE_PRIVATE);
 
-
         String ip = prefs.getString(ipKey, "192.168.0.226");
-
         thefield.setText(ip);
 
-
+        // Start the async task, and make sure that if the ip field changes, we remember it
         asyncTask = new connectTask(ip,getApplicationContext(),(CheckBox) findViewById(R.id.checkBox));
-
         thefield.addTextChangedListener(new MyTextWatcher(prefs,thefield));
-
         asyncTask.execute();
-
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
-        // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         return super.onOptionsItemSelected(item);

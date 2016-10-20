@@ -6,9 +6,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
-/**
- * Created by Arnout on 20/10/2016.
- */
 public class MyTextWatcher implements TextWatcher
 {
     SharedPreferences prefs;
@@ -31,7 +28,7 @@ public class MyTextWatcher implements TextWatcher
     public void onTextChanged(CharSequence s, int start,
                               int before, int count) {
 
-        // In UI task
+        // In UI thread. Save any change in value
         String ipKey = "com.rpiconn.app.ipkey";
         prefs.edit().putString(ipKey, textfield.getText().toString()).apply();
     }
